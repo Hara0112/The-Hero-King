@@ -25,11 +25,11 @@ jobs:
           mkdir -p www/lib
           cp node_modules/three/build/three.module.js www/lib/
           cp node_modules/peerjs/dist/peerjs.min.js www/lib/
-          sed -i 's#https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js#lib/three.module.js#; s#https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js#lib/peerjs.min.js#' www/index.html
+          sed -i 's#https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js#./lib/three.module.js#; s#https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js#lib/peerjs.min.js#' www/index.html
       - run: npx cap add android
       - run: npx cap sync android
       - name: Khóa màn hình ngang
-        run: sed -i 's/<activity /<activity android:screenOrientation="landscape" /' android/app/src/main/AndroidManifest.xml
+        run: sed -i '0,/<activity/s//<activity android:screenOrientation="landscape"/' android/app/src/main/AndroidManifest.xml
       - name: Build debug APK
         run: cd android && chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
